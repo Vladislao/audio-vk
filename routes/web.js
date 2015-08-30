@@ -1,12 +1,20 @@
 var connectRoute = require('connect-route');
+var fileService = require('../bll/file-service');
 
 var apiRoute = connectRoute(function (router) {
     router.get('/', function index(req, res, next) {
-        res.end('Hello from /!\n');
+        res.end('Hello world!\n');
     });
 
-    router.get('/home', function home_index(req, res, next) {
-        res.end('Hello from home');
+    router.get('/download', function download(req, res, next) {
+        res.setHeader('Content-disposition', 'attachment; filename=' + req.query.name);
+        res.setHeader('Content-type', 'audio/mpeg');
+        fileService.download(req.query.url).pipe(res);
+    });
+
+    router.get('/listen', function download(req, res, next) {
+        res.setHeader('Content-type', 'audio/mpeg');
+        fileService.download(req.query.url).pipe(res);
     });
 });
 
