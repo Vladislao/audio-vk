@@ -33,9 +33,6 @@ function validateLoading(req) {
 
 var webPolicies = connectRoute(function (router) {
 
-    router.get('/', function index(req, res, next) {
-    });
-
     router.get('/download', function download(req, res, next) {
         base.validate(validateLoading, req, res, next);
     });

@@ -2,9 +2,6 @@ var connectRoute = require('connect-route');
 var fileService = require('../bll/file-service');
 
 var apiRoute = connectRoute(function (router) {
-    router.get('/', function index(req, res, next) {
-        res.end('Hello world!\n');
-    });
 
     router.get('/download', function download(req, res, next) {
         res.setHeader('Content-disposition', 'attachment; filename=' + req.query.name);
