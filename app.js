@@ -2,7 +2,6 @@
 
 //<editor-fold desc="EXTERNAL LIBS">
 var connect = require('connect');
-var http = require('http');
 // gzip/deflate outgoing responses
 var compression = require('compression');
 // store session state in browser cookie
@@ -45,4 +44,4 @@ app.use('/', webRoute);
 //});
 
 //create node.js http server and listen on port
-http.createServer(app).listen(3000);
+module.exports = app;

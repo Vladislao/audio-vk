@@ -12,6 +12,7 @@ function BasePolicy(){
                 next();
                 break;
             default:
+                res.writeHead(418);
                 res.end(validation);
         }
     }
