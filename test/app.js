@@ -41,4 +41,22 @@ describe('/', function(){
         //        .expect(200, done);
         //});
     });
+    describe('/listen', function(){
+        it('should require vk url', function(done){
+            request(app)
+                .get('/listen')
+                .expect(418, done);
+        });
+        it('should accept only valid vk url', function(done){
+            request(app)
+                .get('/listen?url=https://google.com/')
+                .expect(418, done);
+        });
+        //it('should return audio stream', function(done){
+        //    request(app)
+        //        .get('/download?url=https://cs9-1v4.vk.me/p9/ce1fdfcff72903.mp3')
+        //        .expect('Content-type', 'audio/mpeg')
+        //        .expect(200, done);
+        //});
+    });
 });
