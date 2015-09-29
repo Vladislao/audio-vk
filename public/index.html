@@ -9,8 +9,10 @@
 </head>
 <body>
     <div ng-controller="AudioController">
-        {{test.test1}}
+        <div ng-repeat="track in tracks">
+            <b>{{track.title}}</b>
+            <i>{{track.performer}}</i>
+        </div>
     </div>
-    Hello world
 </body>
 </html>
