@@ -16,10 +16,17 @@ audioVK.controller('AudioController',
         //var open = {};
         //var commentMap = {};
         //
-        $scope.test = {};
+        $scope.tracks = [];
         function init(){
-            $scope.test = {'test1': 'test1', test2:'test2'};
-        }
+            $scope.tracks = [{
+                title: 'BLABLABLA',
+                performer:'lalala'
+            }, {
+                title: 'BLABLABLA1',
+                performer:'lalala1'
+            }];
+        };
+
         init();
         //
         //$scope.$on("$destroy", function() {
