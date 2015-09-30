@@ -1,19 +1,18 @@
+"use strict";
 var connectRoute = require('connect-route');
 var passport = require('../passport');
 
-var webRoute = connectRoute(function (router) {
-    router.get('/vkontakte',
-        passport.authenticate('vkontakte'),
-        function(req, res){
-            // The request will be redirected to vk.com for authentication, so
-            // this function will not be called.
-        });
-    router.get('/vkontakte/callback',
-        passport.authenticate('vkontakte', { failureRedirect: '/login' }),
-        function(req, res) {
-            // Successful authentication, redirect home.
-            res.redirect('/');
-        });
+var authRoute = connectRoute(function (router) {
+    router.get('/vkontakte', passport.authenticate('vkontakte'));
+    router.get('/vkontakte/callback', function(req, res, next){
+        passport.authenticate('vkontakte', {failureRedirect: '/login'},
+            function (err, auth) {
+                res.writeHead(302, {
+                    'Location': '/'
+                });
+                res.end();
+            })(req,req,next);
+    });
 });
 
-module.exports = webRoute;
+module.exports = authRoute;

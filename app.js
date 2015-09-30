@@ -4,6 +4,8 @@
 var connect = require('connect');
 // gzip/deflate outgoing responses
 var compression = require('compression');
+// parse cookies
+var cookieParser = require('cookie-parser');
 // store session state in browser cookie
 var cookieSession = require('cookie-session');
 // parse urlencoded request bodies into req.body
@@ -21,6 +23,7 @@ var webPolicy = require('./policies/web');
 // routes
 var webRoute = require('./routes/web');
 var apiRoute = require('./routes/api');
+var authRoute = require('./routes/auth');
 // passport
 var passport = require('./passport');
 // config
@@ -35,7 +38,9 @@ app.use(query());
 app.use(bodyParser.json());
 
 // session
+app.use(cookieParser());
 app.use(cookieSession({
+    name: 'session',
     keys: config.CookieSecrets
 }));
 // passport
@@ -50,6 +55,7 @@ app.use('/', webPolicy);
 // controllers
 app.use('/', webRoute);
 //app.use('/api/', apiRoute);
+app.use('/auth', authRoute);
 
 //app.use(function onerror(err, req, res, next) {
 //    res.end(err.message);
