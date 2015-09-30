@@ -5,7 +5,7 @@ var connect = require('connect');
 // gzip/deflate outgoing responses
 var compression = require('compression');
 // store session state in browser cookie
-//var cookieSession = require('cookie-session');
+var cookieSession = require('cookie-session');
 // parse urlencoded request bodies into req.body
 var bodyParser = require('body-parser');
 // query parsing
@@ -21,16 +21,26 @@ var webPolicy = require('./policies/web');
 // routes
 var webRoute = require('./routes/web');
 var apiRoute = require('./routes/api');
+// passport
+var passport = require('./passport');
+// config
+var config = require('./config');
 //</editor-fold>
+
 
 var app = connect();
 app.use(compression());
-//app.use(cookieSession({
-//    keys: ['secret1', 'secret2']
-//}));
+
 app.use(query());
 app.use(bodyParser.json());
 
+// session
+app.use(cookieSession({
+    keys: config.CookieSecrets
+}));
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
 // static files
 app.use('/', serveStatic(__dirname + '/public'));
 

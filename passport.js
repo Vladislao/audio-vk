@@ -1,6 +1,7 @@
 // passport
 var passport = require('passport');
 var VKontakteStrategy = require('passport-vkontakte').Strategy;
+var config = require('./config');
 
 // Passport session setup.
 // To support persistent login sessions, Passport needs to be able to
@@ -18,14 +19,12 @@ passport.deserializeUser(function (obj, done) {
 });
 
 passport.use(new VKontakteStrategy({
-        clientID:     VKONTAKTE_APP_ID, // VK.com docs call it 'API ID'
-        clientSecret: VKONTAKTE_APP_SECRET,
+        clientID: config.VKClientId, // VK.com docs call it 'API ID'
+        clientSecret: config.VKСlientSecret,
         callbackURL:  "http://localhost:3000/auth/vkontakte/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
-            return done(err, user);
-        });
+        return done(null, { profile: profile, accessToken: accessToken, refreshToken: refreshToken });
     }
 ));
 
