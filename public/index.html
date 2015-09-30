@@ -9,10 +9,7 @@
 </head>
 <body>
     <div ng-controller="AudioController">
-        <div ng-repeat="track in tracks">
-            <b>{{track.title}}</b>
-            <i>{{track.performer}}</i>
-        </div>
+        <div  ng-include src="'/template/track.html'"></div>
     </div>
 </body>
 </html>
