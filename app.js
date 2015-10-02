@@ -7,7 +7,7 @@ var compression = require('compression');
 // parse cookies
 var cookieParser = require('cookie-parser');
 // store session state in browser cookie
-var cookieSession = require('cookie-session');
+var expressSession = require('express-session');
 // parse urlencoded request bodies into req.body
 var bodyParser = require('body-parser');
 // query parsing
@@ -20,6 +20,7 @@ var serveStatic = require('serve-static');
 //<editor-fold desc="INTERNAL LIBS">
 // policies
 var webPolicy = require('./policies/web');
+var authPolicy = require('./policies/auth');
 // routes
 var webRoute = require('./routes/web');
 var apiRoute = require('./routes/api');
@@ -39,13 +40,23 @@ app.use(bodyParser.json());
 
 // session
 app.use(cookieParser());
-app.use(cookieSession({
-    name: 'session',
-    keys: config.CookieSecrets
+app.use(expressSession({
+    //name: 'session',
+    secret: config.CookieSecrets,
+    saveUninitialized: false,
+    resave: false
+    //cookie: { maxAge: 60 * 60 * 1000 }
 }));
 // passport
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(function(req,res,next){
+    var t = passport.session();
+    t(req,res,next);
+});
+
+// user must be logged in
+app.use('/', authPolicy);
+
 // static files
 app.use('/', serveStatic(__dirname + '/public'));
 
