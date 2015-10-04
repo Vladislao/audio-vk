@@ -14,6 +14,8 @@
     "connect": "^3.4.0",
     "connect-query": "^0.2.0",
     "connect-route": "^0.1.5",
+    "cookie-parser": "^1.4.0",
+    "express-session": "^1.11.3",
     "needle": "^0.10.0",
     "passport": "^0.3.0",
     "passport-vkontakte": "^0.4.0",

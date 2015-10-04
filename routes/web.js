@@ -1,3 +1,5 @@
+"use strict";
+
 var connectRoute = require('connect-route');
 var fileService = require('../bll/file-service');
 
@@ -13,6 +15,7 @@ var apiRoute = connectRoute(function (router) {
         res.setHeader('Content-type', 'audio/mpeg');
         fileService.download(req.query.url).pipe(res);
     });
+
 });
 
 module.exports = apiRoute;
