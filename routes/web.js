@@ -16,22 +16,6 @@ var apiRoute = connectRoute(function (router) {
         fileService.download(req.query.url).pipe(res);
     });
 
-    router.get('/test', function download(req, res, next) {
-        res.end();
-    });
-
-    router.get('/', function (req,res,next){
-        if(req.session.user == null)
-        {
-            res.writeHead(302, {
-                'Location': '/auth/vkontakte'
-            });
-            res.end();
-        } else {
-            next();
-        }
-    })
-
 });
 
 module.exports = apiRoute;

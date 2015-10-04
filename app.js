@@ -5,7 +5,7 @@ var connect = require('connect');
 // gzip/deflate outgoing responses
 var compression = require('compression');
 // parse cookies
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 // store session state in browser cookie
 var expressSession = require('express-session');
 // parse urlencoded request bodies into req.body
@@ -18,12 +18,14 @@ var serveStatic = require('serve-static');
 
 
 //<editor-fold desc="INTERNAL LIBS">
+// extensions
+var response = require('./extensions/response');
 // policies
 var webPolicy = require('./policies/web');
 var authPolicy = require('./policies/auth');
 // routes
 var webRoute = require('./routes/web');
-var apiRoute = require('./routes/api');
+//var apiRoute = require('./routes/api');
 var authRoute = require('./routes/auth');
 // passport
 var passport = require('./passport');
@@ -33,26 +35,23 @@ var config = require('./config');
 
 
 var app = connect();
+app.use(response());
 app.use(compression());
 
 app.use(query());
 app.use(bodyParser.json());
 
 // session
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(expressSession({
-    //name: 'session',
-    secret: config.CookieSecrets,
+    resave: false,
     saveUninitialized: false,
-    resave: false
-    //cookie: { maxAge: 60 * 60 * 1000 }
+    secret: config.CookieSecrets,
+    cookie: {maxAge: 24 * 60 * 60 * 1000}
 }));
 // passport
 app.use(passport.initialize());
-app.use(function(req,res,next){
-    var t = passport.session();
-    t(req,res,next);
-});
+app.use(passport.session());
 
 // user must be logged in
 app.use('/', authPolicy);

@@ -20,7 +20,7 @@ passport.deserializeUser(function (obj, done) {
 
 passport.use(new VKontakteStrategy({
         clientID: config.VKClientId, // VK.com docs call it 'API ID'
-        clientSecret: config.VKСlientSecret,
+        clientSecret: config.VKClientSecret,
         callbackURL: config.VKCallbackUrl
     },
     function(accessToken, refreshToken, profile, done) {

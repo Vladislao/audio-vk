@@ -4,15 +4,10 @@ var passport = require('../passport');
 
 var authRoute = connectRoute(function (router) {
     router.get('/vkontakte', passport.authenticate('vkontakte'));
-    router.get('/vkontakte/callback', function(req, res, next){
-        passport.authenticate('vkontakte', {failureRedirect: '/login'},
-            function (err, auth) {
-                res.writeHead(302, {
-                    'Location': '/'
-                });
-                res.end();
-            })(req,req,next);
-    });
+    router.get('/vkontakte/callback', passport.authenticate('vkontakte', {
+        successRedirect: '/',
+        failureRedirect: '/auth/error'
+    }));
 });
 
 module.exports = authRoute;
