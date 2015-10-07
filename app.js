@@ -25,7 +25,7 @@ var webPolicy = require('./policies/web');
 var authPolicy = require('./policies/auth');
 // routes
 var webRoute = require('./routes/web');
-//var apiRoute = require('./routes/api');
+var apiRoute = require('./routes/api');
 var authRoute = require('./routes/auth');
 // passport
 var passport = require('./passport');
@@ -64,7 +64,7 @@ app.use('/', webPolicy);
 
 // controllers
 app.use('/', webRoute);
-//app.use('/api/', apiRoute);
+app.use('/api/', apiRoute);
 app.use('/auth', authRoute);
 
 //app.use(function onerror(err, req, res, next) {
