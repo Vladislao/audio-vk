@@ -21,6 +21,7 @@ var serveStatic = require('serve-static');
 // extensions
 var response = require('./extensions/response');
 // policies
+var apiPolicy = require('./policies/api');
 var webPolicy = require('./policies/web');
 var authPolicy = require('./policies/auth');
 // routes
@@ -34,42 +35,50 @@ var config = require('./config');
 //</editor-fold>
 
 
-var app = connect();
-app.use(response());
-app.use(compression());
+function createApp(env){
+    var app = connect();
 
-app.use(query());
-app.use(bodyParser.json());
+    app.use(response());
+    app.use(compression());
 
-// session
-//app.use(cookieParser());
-app.use(expressSession({
-    resave: false,
-    saveUninitialized: false,
-    secret: config.CookieSecrets,
-    cookie: {maxAge: 24 * 60 * 60 * 1000}
-}));
-// passport
-app.use(passport.initialize());
-app.use(passport.session());
+    app.use(query());
+    app.use(bodyParser.json());
 
-// user must be logged in
-app.use('/', authPolicy);
+    // session
+    //app.use(cookieParser());
+    app.use(expressSession({
+        resave: false,
+        saveUninitialized: false,
+        secret: config.CookieSecrets,
+        cookie: {maxAge: 24 * 60 * 60 * 1000}
+    }));
+    // passport
+    app.use(passport.initialize());
+    app.use(passport.session());
 
-// static files
-app.use('/', serveStatic(__dirname + '/public'));
+    // user must be logged in
+    if(env == 'production')
+        app.use('/', authPolicy);
 
-// policies
-app.use('/', webPolicy);
+    // static files
+    app.use('/', serveStatic(__dirname + '/public'));
 
-// controllers
-app.use('/', webRoute);
-app.use('/api/', apiRoute);
-app.use('/auth', authRoute);
+    // policies
+    app.use('/', webPolicy);
+    app.use('/api/', apiPolicy );
 
-//app.use(function onerror(err, req, res, next) {
-//    res.end(err.message);
-//});
+    // controllers
+    app.use('/', webRoute);
+    app.use('/api/', apiRoute);
+    app.use('/auth', authRoute);
+
+    //app.use(function onerror(err, req, res, next) {
+    //    res.end(err.message);
+    //});
+    return app;
+}
+
+
 
 //create node.js http server and listen on port
-module.exports = app;
+module.exports = createApp;

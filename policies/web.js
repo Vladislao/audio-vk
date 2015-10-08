@@ -5,7 +5,7 @@ var url = require('url');
 var base = require('./base');
 var string = require('../extensions/string');
 
-function validateLink(req) {
+function _validateLink(req) {
     var link = req.query.url;
 
     // should exist
@@ -25,7 +25,7 @@ function validateLink(req) {
     return base.messages.VALID
 }
 
-function validateName(req) {
+function _validateName(req) {
     var name = req.query.name;
 
     // should exist
@@ -43,12 +43,12 @@ var webPolicies = connectRoute(function (router) {
 
     router.get('/download', function download(req, res, next) {
         base.validate(function(req){
-            return validateName(req) || validateLink(req)
+            return _validateName(req) || _validateLink(req)
         }, req, res, next);
     });
 
     router.get('/listen', function listen(req, res, next) {
-        base.validate(validateLink, req, res, next);
+        base.validate(_validateLink, req, res, next);
     });
 });
 

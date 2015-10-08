@@ -1,6 +1,7 @@
 function BasePolicy(){
     this.messages = {
         VALID: '',
+        METHOD_NOT_SUPPORTED: 'Method name not supported',
         URL_NOT_CORRECT: 'Url not in correct format',
         NAME_NOT_CORRECT: 'Name not in correct format'
     };

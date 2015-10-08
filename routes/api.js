@@ -7,10 +7,12 @@ var apiRoute = connectRoute(function (router) {
         res.end('Hello from api!\n');
     });
     router.get('/method/*', function vk(req,res,next){
-
+        // client controlled logic
         var method = req.url;
+        // token saved on server
         var token = req.session.passport.user.accessToken;
 
+        // create and send request to vk.com
         var url = 'https://api.vk.com' + method + '&access_token=' + token;
         console.log(url);
         needle.get(url,function(error, response) {
