@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 
-var str = require('../../extensions/string');
+var str = require('../../../extensions/string');
 
 describe('string', function(){
    describe('#endsWith()', function(){

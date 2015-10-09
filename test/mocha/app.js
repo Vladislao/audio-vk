@@ -1,6 +1,7 @@
 "use strict";
+
 var request = require('supertest');
-var app = require('../app');
+var app = require('../../app');
 
 describe('/', function(){
     describe('/download', function(){
