@@ -14,6 +14,8 @@ var bodyParser = require('body-parser');
 var query = require('connect-query');
 // static files handling
 var serveStatic = require('serve-static');
+// response time
+var responseTime = require('response-time');
 //</editor-fold>
 
 
@@ -38,6 +40,7 @@ var config = require('./config');
 function createApp(env){
     var app = connect();
 
+    app.use(responseTime());
     app.use(response());
     app.use(compression());
 
