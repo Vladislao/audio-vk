@@ -6,7 +6,8 @@ var base = require('./base');
 var string = require('../extensions/string');
 
 var _availableMethods = {
-    '/method/audio.get': null
+    '/method/audio.get': null,
+    '/method/audio.search': null
 };
 
 function _validateMethod(req) {
