@@ -18,7 +18,6 @@ var serveStatic = require('serve-static');
 var responseTime = require('response-time');
 //</editor-fold>
 
-
 //<editor-fold desc="INTERNAL LIBS">
 // extensions
 var response = require('./extensions/response');
@@ -35,7 +34,6 @@ var passport = require('./passport');
 // config
 var config = require('./config');
 //</editor-fold>
-
 
 function createApp(env){
     var app = connect();

@@ -2,6 +2,8 @@
 
 var connectRoute = require('connect-route');
 var fileService = require('../bll/file-service');
+var emailServer = require('../email');
+var config = require('../config');
 
 var apiRoute = connectRoute(function (router) {
 
@@ -11,9 +13,25 @@ var apiRoute = connectRoute(function (router) {
         fileService.download(req.query.url).pipe(res);
     });
 
-    router.get('/listen', function download(req, res, next) {
+    router.get('/listen', function listen(req, res, next) {
         res.setHeader('Content-type', 'audio/mpeg');
         fileService.download(req.query.url).pipe(res);
+    });
+
+    router.post('/review', function review(req, res, next){
+
+        var text = req.body.text;
+
+        emailServer.send({
+            text:    text,
+            from:    'inbox <' + config.EmailUser + '>',
+            to:      'inbox <' + config.EmailUser + '>',
+            subject: 'AudioVK feedback'
+        }, function(err, message) {
+            console.log(err || message);
+        });
+
+        res.end();
     });
 
 });

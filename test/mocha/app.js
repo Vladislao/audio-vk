@@ -25,12 +25,6 @@ describe('/', function(){
                 .get('/download?url=https://cs9-1v4.vk.me/p9/ce1fdfcff72903.mp3&name=somename.txt')
                 .expect(418, done);
         });
-        //it('should return audio stream', function(done){
-        //    request(app)
-        //        .get('/download?url=https://cs9-1v4.vk.me/p9/ce1fdfcff72903.mp3&name=test.mp3')
-        //        .expect('Content-type', 'audio/mpeg')
-        //        .expect(200, done);
-        //});
     });
     describe('/listen', function(){
         it('should require vk url', function(done){
@@ -43,12 +37,14 @@ describe('/', function(){
                 .get('/listen?url=https://google.com/')
                 .expect(418, done);
         });
-        //it('should return audio stream', function(done){
-        //    request(app('test'))
-        //        .get('/download?url=https://cs9-1v4.vk.me/p9/ce1fdfcff72903.mp3')
-        //        .expect('Content-type', 'audio/mpeg')
-        //        .expect(200, done);
-        //});
+    });
+    describe('/review', function(){
+        it('should require text', function(done){
+            request(app('test'))
+                .post('/review')
+                .send({text: ''})
+                .expect(418, done);
+        });
     });
     describe('/api', function(){
        describe('/method/*', function(){

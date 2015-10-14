@@ -39,6 +39,15 @@ function _validateName(req) {
     return base.messages.VALID
 }
 
+function _validateReview(req){
+    var text = req.body.text;
+
+    if(text == false)
+        return base.messages.FIELDS_REQUIRED;
+
+    return base.messages.VALID;
+}
+
 var webPolicies = connectRoute(function (router) {
 
     router.get('/download', function download(req, res, next) {
@@ -49,6 +58,10 @@ var webPolicies = connectRoute(function (router) {
 
     router.get('/listen', function listen(req, res, next) {
         base.validate(_validateLink, req, res, next);
+    });
+
+    router.post('/review', function review(req, res, next) {
+        base.validate(_validateReview, req, res, next);
     });
 });
 
