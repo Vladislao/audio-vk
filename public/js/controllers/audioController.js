@@ -1,7 +1,7 @@
 'use strict';
 
 audioVK.controller('AudioController',
-    function AudioController($scope) {
+    function AudioController($scope, audioService) {
         var self = this;
 
         //self.add = add;
@@ -17,17 +17,27 @@ audioVK.controller('AudioController',
         //var commentMap = {};
         //
         $scope.tracks = [];
+        $scope.getTracks = getTracks;
         function init(){
             $scope.tracks = [{
                 title: 'BLABLABLA',
-                performer:'lalala'
+                artist:'lalala'
             }, {
                 title: 'BLABLABLA1',
-                performer:'lalala1'
+                artist:'lalala1'
             }];
-        };
+
+            getTracks();
+        }
 
         init();
+
+        function getTracks() {
+            audioService.get().then(function(data){
+                $scope.tracks = data.data.response
+                console.log(data);
+            });
+        }
         //
         //$scope.$on("$destroy", function() {
         //    if (timer) {
