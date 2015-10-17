@@ -1,8 +1,10 @@
 function BasePolicy(){
     this.messages = {
         VALID: '',
-        URL_NOT_CORRECT: 'Url not in correct format',
-        NAME_NOT_CORRECT: 'Name not in correct format'
+        METHOD_NOT_SUPPORTED: 'METHOD_NOT_SUPPORTED',
+        URL_NOT_CORRECT: 'URL_NOT_CORRECT',
+        NAME_NOT_CORRECT: 'NAME_NOT_CORRECT',
+        FIELDS_REQUIRED: 'FIELDS_REQUIRED'
     };
 
     this.validate = function(validator, req, res, next) {
